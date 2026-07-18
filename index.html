@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TWOSTRYVE — Brand streetwear lokal dengan kualitas premium. Kaos, hoodie, jacket, celana, dan aksesoris streetwear terbaik. Belanja mudah tanpa perlu akun." />
+  <meta name="keywords" content="twostryve, streetwear, fashion, kaos, hoodie, jacket, cargo pants, brand lokal, indonesia" />
+  <meta name="author" content="TWOSTRYVE" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TWOSTRYVE — Streetwear Culture Redefined" />
+  <meta property="og:description" content="Brand streetwear lokal dengan kualitas premium. Belanja mudah tanpa perlu akun." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://twostryve.id" />
+  <meta property="og:image" content="assets/images/hero-1.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TWOSTRYVE — Streetwear Culture Redefined" />
+  <meta name="twitter:description" content="Brand streetwear lokal dengan kualitas premium." />
+
+  <title>TWOSTRYVE — Streetwear Culture Redefined</title>
+
+  <!-- Favicon (inline SVG for dark theme) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+  <!-- Splash screen overlay (auto-fades after 1.5s max) -->
+  <div id="splashOverlay" style="position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.4s ease, visibility 0.4s ease">
+    <div style="font-family:'Raleway',sans-serif;font-size:2rem;font-weight:800;letter-spacing:4px;color:#1f2021;text-transform:uppercase">TWOSTRYVE</div>
+    <div style="width:36px;height:2px;background:#1f2021"></div>
+  </div>
+
+  <div id="app"></div>
+
+  <script>
+    // Auto remove splash screen after max 1.5s
+    setTimeout(() => {
+      const splash = document.getElementById('splashOverlay');
+      if (splash) {
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+        setTimeout(() => splash.remove(), 400);
+      }
+    }, 1200);
+  </script>
+
+  <!-- Supabase JS SDK CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Scripts (order matters: data → cart → app) -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Schema.org structured data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "TWOSTRYVE",
+    "description": "Brand streetwear lokal dengan kualitas premium. Kaos, hoodie, jacket, celana, dan aksesoris streetwear terbaik.",
+    "url": "https://twostryve.id",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+628123456789",
+      "contactType": "customer service",
+      "availableLanguage": "Indonesian"
+    },
+    "sameAs": [
+      "https://instagram.com/twostryve.id",
+      "https://tiktok.com/@twostryve.id",
+      "https://facebook.com/twostryve.id"
+    ]
+  }
+  </script>
+</body>
+</html>
