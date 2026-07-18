@@ -1,8 +1,32 @@
 {
   "version": 2,
-  "public": true,
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" }
+  "outputDirectory": "laravel/public",
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.3",
+      "includeFiles": "laravel/**"
+    }
+  },
+  "routes": [
+    {
+      "src": "/build/(.*)",
+      "dest": "/laravel/public/build/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/laravel/public/assets/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/laravel/public/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/laravel/public/js/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
   ]
 }

@@ -1,6 +1,11 @@
 <?php
 
-// 1. Set environment variables for Vercel Serverless
+// 1. Change directory to laravel folder
+chdir(__DIR__ . '/laravel');
+
+define('LARAVEL_START', microtime(true));
+
+// 2. Set environment variables for Vercel Serverless
 putenv('APP_ENV=production');
 putenv('APP_DEBUG=true');
 putenv('APP_KEY=base64:X8nF107+D0N3yv/QWwYy2Hl1K8N7p1+v9q4+R2B/8A8=');
@@ -26,16 +31,30 @@ $_ENV['LOG_CHANNEL'] = 'stderr';
 $_ENV['DB_CONNECTION'] = 'sqlite';
 $_ENV['DB_DATABASE'] = '/tmp/database.sqlite';
 
-// 2. Create required /tmp directories
 if (!file_exists('/tmp/views')) {
     @mkdir('/tmp/views', 0755, true);
 }
 
-// 3. Copy sqlite database to /tmp if not exists
 $sourceDb = __DIR__ . '/laravel/database/database.sqlite';
-if (!file_exists('/tmp/database.sqlite') && file_exists($sourceDb)) {
-    @copy($sourceDb, '/tmp/database.sqlite');
+if (!file_exists('/tmp/database.sqlite')) {
+    if (file_exists($sourceDb)) {
+        @copy($sourceDb, '/tmp/database.sqlite');
+    } else {
+        @touch('/tmp/database.sqlite');
+    }
 }
 
-// 4. Load Laravel Application
-require __DIR__ . '/laravel/public/index.php';
+try {
+    require __DIR__ . '/laravel/vendor/autoload.php';
+    $app = require_once __DIR__ . '/laravel/bootstrap/app.php';
+    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+    $response = $kernel->handle(
+        $request = Illuminate\Http\Request::capture()
+    );
+    $response->send();
+    $kernel->terminate($request, $response);
+} catch (\Throwable $e) {
+    echo "<h1>Laravel Execution Error</h1>";
+    echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+}
