@@ -34,10 +34,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy the laravel project files
 COPY laravel /var/www/html/
 
+# Create .env from .env.example to prevent artisan from crashing during composer install
+RUN cp .env.example .env
+
 # Install composer dependencies
-# Using --ignore-platform-reqs to bypass extension requirements during build
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+
+# Generate APP_KEY
+RUN php artisan key:generate
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
