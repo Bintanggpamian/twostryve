@@ -47,12 +47,7 @@ if (!file_exists('/tmp/database.sqlite')) {
 try {
     require __DIR__ . '/laravel/vendor/autoload.php';
     $app = require_once __DIR__ . '/laravel/bootstrap/app.php';
-    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-    $response = $kernel->handle(
-        $request = Illuminate\Http\Request::capture()
-    );
-    $response->send();
-    $kernel->terminate($request, $response);
+    $app->handleRequest(Illuminate\Http\Request::capture());
 } catch (\Throwable $e) {
     echo "<h1>Laravel Execution Error</h1>";
     echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
